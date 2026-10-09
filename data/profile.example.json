@@ -1,0 +1,125 @@
+{
+  "_readme": "This is the single source of truth. The resume generator and scoring engine are only allowed to reference skills/projects/experience listed here, by their exact 'id'. Never let an LLM add a skill or claim that doesn't trace back to an id in this file, see app/validate.py. Copy this file to data/profile.json and replace everything below with your own real info.",
+  "candidate": {
+    "name": "Jane Doe",
+    "file_name_stub": "Jane_Doe",
+    "location": "Austin, TX",
+    "email": "jane.doe@example.com",
+    "links": {
+      "github": "github.com/janedoe",
+      "portfolio": "janedoe.dev",
+      "linkedin": "linkedin.com/in/janedoe"
+    },
+    "education": {
+      "degree": "B.S. in Computer Science",
+      "school": "University of Texas at Austin",
+      "expected_graduation": "2027-05",
+      "gpa_100": 88,
+      "gpa_4": 3.6
+    },
+    "citizenship": "United States",
+    "work_authorization": {
+      "notes": "US citizen. No sponsorship or visa restrictions."
+    },
+    "languages": [
+      {
+        "language": "English",
+        "level": "Native"
+      },
+      {
+        "language": "Spanish",
+        "level": "Conversational"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "skill_python",
+      "name": "Python",
+      "category": "programming"
+    },
+    {
+      "id": "skill_js_react",
+      "name": "JavaScript / React",
+      "category": "programming"
+    },
+    {
+      "id": "skill_sql",
+      "name": "SQL",
+      "category": "programming"
+    },
+    {
+      "id": "skill_docker",
+      "name": "Docker",
+      "category": "cloud"
+    },
+    {
+      "id": "skill_aws",
+      "name": "AWS (EC2, S3, Lambda)",
+      "category": "cloud"
+    },
+    {
+      "id": "skill_git",
+      "name": "Git/GitHub",
+      "category": "cloud"
+    }
+  ],
+  "not_skills": [
+    "Rust",
+    "Go",
+    "Kubernetes (production use)"
+  ],
+  "projects": [
+    {
+      "id": "proj_example_webapp",
+      "title": "Example Full-Stack Web App",
+      "meta": "Personal Project, 2025 | github.com/janedoe/example-app",
+      "skill_ids": [
+        "skill_python",
+        "skill_js_react",
+        "skill_sql",
+        "skill_docker"
+      ],
+      "bullets": [
+        "Built a full-stack web app with a Python/Flask backend, React frontend, and PostgreSQL database, containerized with Docker.",
+        "Deployed to AWS with CI/CD via GitHub Actions."
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "id": "exp_example_internship",
+      "title": "Software Engineering Intern | Example Corp",
+      "meta": "June 2025 - August 2025",
+      "skill_ids": [
+        "skill_python",
+        "skill_aws"
+      ],
+      "bullets": [
+        "Built and shipped an internal tool that automated a manual reporting process, saving the team several hours per week.",
+        "Wrote unit tests and participated in code review as part of a 6-person engineering team."
+      ]
+    }
+  ],
+  "certifications": [
+    "AWS Certified Cloud Practitioner"
+  ],
+  "hard_disqualifier_rules": [
+    {
+      "pattern": "ITAR|export control|U\\.S\\. person|Department of War|deemed export",
+      "flag": "Possible ITAR/export-control restriction, verify eligibility before proceeding."
+    },
+    {
+      "pattern": "security clearance|U\\.?S\\.?\\s*citizenship\\s*required|requires?\\s+U\\.?S\\.?\\s*citizenship|must\\s+be\\s+a\\s+U\\.?S\\.?\\s*citizen",
+      "flag": "Requires US citizenship/security clearance, verify this applies to you."
+    },
+    {
+      "pattern": "(?<!0-)\\b([4-9]|1[0-9])\\+ years",
+      "flag": "May require significant professional experience, verify years required against your own experience."
+    },
+    {
+      "pattern": "(PhD|Master's)\\s+(is\\s+)?required|requires?\\s+a\\s+(PhD|Master's)|requires?\\s+(a\\s+|an\\s+)?advanced\\s+degree|must\\s+have\\s+(a\\s+|an\\s+)?(PhD|Master's)|currently\\s+(pursuing|enrolled\\s+in)\\s+(a\\s+|an\\s+)?(PhD|Master's|graduate)",
+      "flag": "May require graduate enrollment, verify against your own degree status."
+    }
+  ]
+}

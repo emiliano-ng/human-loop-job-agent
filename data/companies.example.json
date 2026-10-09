@@ -1,0 +1,36 @@
+{
+  "_readme": "Scan targets. Copy this file to data/companies.json and edit freely, no code changes needed. Each entry needs 'active': true to be scanned; flip to false to pause a source without deleting it. Formats: greenhouse/lever/ashby entries use 'slug', the company's slug in their public job-board URL (e.g. boards.greenhouse.io/<slug>, jobs.lever.co/<slug>, jobs.ashbyhq.com/<slug>). github_job_lists entries point at a community-maintained README table of postings (e.g. SimplifyJobs' Summer-Internships / New-Grad-Positions repos) and are fetched read-only via the public raw GitHub content API, 'owner'/'repo' are the GitHub repo, 'branch' defaults to 'dev', 'path' defaults to 'README.md'.",
+  "greenhouse": [
+    {
+      "slug": "apptronik",
+      "active": true
+    },
+    {
+      "slug": "figureai",
+      "active": true
+    }
+  ],
+  "lever": [],
+  "ashby": [
+    {
+      "slug": "physicalintelligence",
+      "active": true
+    }
+  ],
+  "github_job_lists": [
+    {
+      "owner": "SimplifyJobs",
+      "repo": "New-Grad-Positions",
+      "branch": "dev",
+      "path": "README.md",
+      "active": true
+    },
+    {
+      "owner": "SimplifyJobs",
+      "repo": "Summer2027-Internships",
+      "branch": "dev",
+      "path": "README.md",
+      "active": true
+    }
+  ]
+}
