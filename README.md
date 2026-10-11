@@ -1,5 +1,7 @@
 # Job Agent: search & tailor, human applies
 
+[![CI](https://github.com/emiliano-ng/human-loop-job-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/emiliano-ng/human-loop-job-agent/actions/workflows/ci.yml)
+
 A tool that finds relevant job postings and drafts a tailored resume for
 each one, but **never applies on your behalf**. You review, you click
 apply. That line is intentional, not a missing feature.
@@ -52,6 +54,8 @@ scored, both via the tracker's own legend emoji and via a text regex
 safety net.
 
 ## Setup
+
+Requires Python 3.10 or newer.
 
 ```bash
 git clone https://github.com/emiliano-ng/human-loop-job-agent
@@ -182,6 +186,18 @@ down the line) without touching any code.
   User-Agent with your contact info and read each provider's terms first.
 - Do not commit cached listings or screenshots that show real postings.
 
+## Development
+
+```bash
+pip install -r requirements-dev.txt
+ruff check .
+pytest
+```
+
+The tests never call a real LLM or the network. CI runs the same checks on
+every push, plus a check that no private file (`profile.json`, `.env`, the
+cache) is tracked by git.
+
 ## Project layout
 
 ```
@@ -200,6 +216,7 @@ data/
   profile.example.json  template to copy from
   companies.json         your real scan list (gitignored)
   companies.example.json template to copy from
+tests/                   pytest suite (network, validator, cache, filters, parser, repo hygiene)
 ```
 
 ## License

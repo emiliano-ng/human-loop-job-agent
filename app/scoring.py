@@ -1,7 +1,7 @@
 """Posting evaluation: cheap deterministic pre-filters, then LLM scoring."""
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from .validate import load_profile, validate_selection
 from .llm_client import json_completion
@@ -13,10 +13,10 @@ IRRELEVANT_TITLE_KEYWORDS = [
     "sales", "account executive", "business development",
     "marketing", "brand", "communications", "pr manager",
     "legal", "counsel", "compliance officer",
-    "finance", "accounting", "controller", "payroll",
+    "finance", "accounting", "financial controller", "payroll",
     "human resources", " hr ", "people operations", "people partner",
     "office coordinator", "executive assistant", "administrative assistant",
-    "designer", "ux ", "ui/ux", "graphic design",
+    "product designer", "visual designer", "brand designer", "ux ", "ui/ux", "graphic design",
     "customer success", "customer support agent",
     "operator", "technician",
     "chief ", "vp ", "vice president", "director of",
@@ -58,12 +58,14 @@ EXCLUDED_LOCATION_KEYWORDS = [
 ]
 
 
+_EXCLUDED_LOCATION_RE = re.compile(r"\b(" + "|".join(re.escape(k) for k in EXCLUDED_LOCATION_KEYWORDS) + r")\b")
+
+
 def is_excluded_location(location: str) -> bool:
-    loc = (location or "").lower()
-    return any(kw in loc for kw in EXCLUDED_LOCATION_KEYWORDS)
+    return bool(_EXCLUDED_LOCATION_RE.search((location or "").lower()))
 
 
-INTERNSHIP_KEYWORDS = ["intern", "internship", "co-op", "co op", "coop"]
+INTERNSHIP_PATTERN = re.compile(r"\b(interns?|internships?|co-?ops?|co op)\b")
 
 NEW_GRAD_KEYWORDS = [
     "new grad", "new graduate", "university grad", "university graduate",
@@ -81,7 +83,7 @@ SENIOR_KEYWORDS = [
 def classify_level(title: str) -> str:
     """Buckets a posting title into internship, new_grad, senior or unspecified."""
     t = f" {title.lower()} "
-    if any(kw in t for kw in INTERNSHIP_KEYWORDS):
+    if INTERNSHIP_PATTERN.search(t):
         return "internship"
     if any(kw in t for kw in SENIOR_KEYWORDS):
         return "senior"
@@ -217,6 +219,6 @@ def _replace_ids_with_names(text: str, profile: dict) -> str:
     id_to_name.update({p["id"]: p["title"] for p in profile["projects"]})
     id_to_name.update({e["id"]: e["title"] for e in profile["experience"]})
 
-    for raw_id, name in id_to_name.items():
-        text = text.replace(raw_id, name)
+    for raw_id in sorted(id_to_name, key=len, reverse=True):
+        text = text.replace(raw_id, id_to_name[raw_id])
     return text

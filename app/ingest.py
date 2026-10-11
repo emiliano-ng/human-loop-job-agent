@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 import httpx
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from . import net
 

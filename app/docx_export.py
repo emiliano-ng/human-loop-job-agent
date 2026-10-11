@@ -126,7 +126,7 @@ def build_resume_docx(scored: ScoredPosting, output_path: Path, profile: dict | 
         _add_bullet(doc, cert)
 
     _add_heading(doc, "LANGUAGES")
-    doc.add_paragraph(" | ".join(f"{l['language']}: {l['level']}" for l in c["languages"]))
+    doc.add_paragraph(" | ".join(f"{lang['language']}: {lang['level']}" for lang in c["languages"]))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     doc.save(str(output_path))
